@@ -1,0 +1,28 @@
+.movie-card {
+  text-align: center;
+  border-radius: 8px;
+  box-shadow: 11px 4px 22px -1px rgba(0,0,0,0.75);
+  padding-top: 24px;
+  margin-bottom: 30px;
+  overflow-x: hidden;
+
+  &__wrapper {
+    padding: 30px 24px;
+  }
+
+  &__detail {
+    margin-bottom: 16px;
+    span {
+      font-weight: 600;
+    }
+  }
+
+  &__img {
+    max-height: 300px;
+    margin-bottom: 30px;
+
+    @media only screen and (max-width: 986px) {
+      max-height: 130px;
+    } 
+  }
+}

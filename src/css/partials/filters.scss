@@ -1,0 +1,21 @@
+.filters {
+  border: 2px solid #153E7E;
+  border-radius: 4px;
+  padding: 16px;
+  margin-bottom: 50px;
+
+  &__label {
+    display: block;
+    margin-bottom: 32px;
+  }
+
+  &__select {
+    display: block;
+    width: 100%;
+    margin-top: 8px;
+  }
+
+  &__input {
+    width: 100%;
+  }
+}

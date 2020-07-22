@@ -1,0 +1,25 @@
+.pagination {
+  margin: 50px 0;
+  overflow-x: auto;
+  ;
+  &__btn {
+    height: 40px;
+    width: 40px;
+    border-radius: 4px;
+    border: 1px solid black;
+    margin-right: 16px;
+
+    &:hover, &:focus {
+      color:#153E7E;
+      font-weight: 500;
+      border: 1.5px solid#153E7E;
+      outline: none;
+    }
+
+    &.active {
+      color:#153E7E;
+      font-weight: 500;
+      border: 1.5px solid#153E7E;
+    }
+  }
+}

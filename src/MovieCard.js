@@ -1,8 +1,6 @@
 import React from 'react';
 
-function MovieCard(props) {
-
-  let movies = props.movies;
+function MovieCard({movies}) {
 
   let list = movies === undefined ? "" : movies.map((element) => 
     <div className="col-6 col-md-4">

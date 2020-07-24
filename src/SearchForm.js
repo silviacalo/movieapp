@@ -1,10 +1,10 @@
 import React from 'react';
 import search from './search.svg';
 
-function SearchForm(props) {
+function SearchForm({submit,change,text}) {
   return (
-    <form onSubmit = {props.submit} onChange= {props.change} className = "form-search">
-      <input type="text" placeholder="Search a movie!" required="required" value = {props.text}/>
+    <form onSubmit = {submit} onChange= {change} className = "form-search">
+      <input type="text" placeholder="Search a movie!" required="required" value = {text}/>
       <button type="submit" value="Submit" className="form-search__btn">
         <img src={search} alt="logo" className="form-search__icon"/>
       </button>

@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import Header from './Header';
-import {useParams} from "@reach/router"
+import {useParams} from "@reach/router";
+import Loading from './Loading';
 
-function MovieDetail() {
+function MovieDetail(props) {
   const [link] = useState("/movie-app");
   const [movie, setMovie] = useState("");
   const [loading, setLoading] = useState(true); 
@@ -12,12 +13,16 @@ function MovieDetail() {
 
   //chiama servizio
   useEffect(() => {
+    setLoading(true);
     let url = 'http://www.omdbapi.com/?apikey=4a3b711b&i=' + id;
     fetch(url)
     .then(response => response.json())
     .then(data => setMovie(data))
     .then(() => setLoading(false))
-    .catch((error)=> console.log(error));
+    .catch((error)=> {
+      setLoading(false);
+      console.log(error);
+    });
   }, [id]);
 
   let seasons = movie !== null && movie.totalSeasons &&
@@ -26,7 +31,7 @@ function MovieDetail() {
       {movie.totalSeasons}
     </div>;
 
-  let moviePage = "";
+  let moviePage;
 
   if(!loading) {
     moviePage = movie !== null && movie.Response !== "False" ?
@@ -81,11 +86,13 @@ function MovieDetail() {
     <div className = "movie">
       Incorrect IMDb ID.
     </div>;
+  } else {
+    moviePage = <Loading />
   }
 
   return (
     <div>
-      <Header link = {link}/>
+      <Header link = {link} keyword = {props.location.state.keyWord} tags = {props.location.state.tags} activePage = {props.location.state.activePage} />
       <div className = "container">
         <div className = "row">
           <div className = "col-12">

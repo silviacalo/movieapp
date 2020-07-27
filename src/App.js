@@ -10,7 +10,7 @@ function App () {
   return (
     <Router>
       <NotFound default />
-      <SearchPage path = "/movie-app" />
+      <SearchPage path = "/movie-app" default />
       <MovieDetail path = "/detail-page/:movieId" />
     </Router>
   )

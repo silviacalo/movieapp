@@ -5,11 +5,12 @@ import Pagination from './Pagination';
 import Filters from './Filters';
 import Results from './Results';
 import Header from './Header';
+import Loading from './Loading';
 
-function SearchPage() {
+function SearchPage({location}) {
   const [movieList, setMovieList] = useState([]);
   const [keyInput, setKeyInput] = useState("");
-  const [key, setKey] = useState("");
+  const [key, setKey] = useState((location.state && location.state.keyword) || "");
   const [totalResults, setTotalResults] = useState(null);
   const [loading, setLoading] = useState(false);
   const [filter, setFilter] = useState({
@@ -17,11 +18,14 @@ function SearchPage() {
     year: ""
   });
   const [tags, setTags] = useState({
-    type: "",
-    year: ""
+    type: ((location.state && location.state.tags.type) || ""),
+    year: ((location.state && location.state.tags.year) || "")
   });
   const [pagination, setPagination] = useState([]);
-  const [activePage, setActivePage] = useState(1);
+  const [activePage, setActivePage] = useState((location.state && location.state.activePage) || 1);
+
+
+  console.log(key);
 
   //logica della paginazione
   const createPagination = useCallback((total) => {
@@ -55,19 +59,23 @@ function SearchPage() {
 
   //chiama servizio
   useEffect(() => {
-    let url = 'http://www.omdbapi.com/?apikey=4a3b711b&s=' + key + '&page=' + activePage + '&type=' + tags.type + '&y=' + tags.year;
-    fetch(url)
-    .then(response => response.json())
-    .then(data => {
-      setMovieList(data.Search);
-      if(loading) {
+    if(key) {
+      setLoading(true);
+      let url = 'http://www.omdbapi.com/?apikey=4a3b711b&s=' + key + '&page=' + activePage + '&type=' + tags.type + '&y=' + tags.year;
+      fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        setMovieList(data.Search);
         setTotalResults(data.totalResults);
         createPagination(data.totalResults);
-      }
-    })
-    .catch((error)=>{console.log(error)});
-    setLoading(false);
-  }, [key, activePage,tags.type, tags.year, loading, createPagination]);
+        setLoading(false);
+      })
+      .catch((error)=>{
+        console.log(error);
+        setLoading(false);
+      });
+    }
+  }, [key, activePage,tags.type, tags.year, createPagination]);
 
   const handleChange = (event) => {
     setKeyInput(event.target.value);
@@ -85,14 +93,12 @@ function SearchPage() {
       type: "",
       year: ""
     })
-    setLoading(true);
     setActivePage(1);
   }
 
   //mostra i risultati quando cambio pagina dalla paginazione
   const changePage = (i) => {
     setActivePage(i);
-    setLoading(true);
   }
 
   //gestisce il change dei filtri
@@ -115,7 +121,6 @@ function SearchPage() {
       year: filter.year
     });
     setActivePage(1);
-    setLoading(true);
   }
 
   //cancella i filtri
@@ -140,7 +145,6 @@ function SearchPage() {
       })
     }
     setActivePage(1);
-    setLoading(true);
   }
 
   return (
@@ -154,14 +158,20 @@ function SearchPage() {
             </div>
           </div>
         </div>
-        <Results totalResults = {totalResults} activeFilters = {tags} onclick = {removeFilter} />
-        <div className="row">
-            <div className="col-12 col-lg-2">
-              <Filters totalResults = {totalResults} filter = {filter} handleSubmit = {filtersSubmit} handleChange = {filtersChange} />
+        {loading ? (
+          <Loading />
+        ):(
+          <>
+            <Results totalResults = {totalResults} activeFilters = {tags} onclick = {removeFilter} />
+            <div className="row">
+                <div className="col-12 col-lg-2">
+                  <Filters totalResults = {totalResults} filter = {filter} handleSubmit = {filtersSubmit} handleChange = {filtersChange} />
+                </div>
+                <MovieCard movies = {movieList} keyWord = {key} tags = {tags} activePage = {activePage} />
             </div>
-            <MovieCard movies = {movieList} />
-        </div>
-        <Pagination pagination = {pagination} activePage = {activePage} results = {totalResults} click = {changePage} />
+            <Pagination pagination = {pagination} activePage = {activePage} results = {totalResults} click = {changePage} />
+          </>
+        )}
       </div>
     </div>
   );

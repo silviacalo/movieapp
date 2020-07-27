@@ -1,19 +1,19 @@
 import React from 'react';
 import times from './times.svg';
 
-function Results(props) {
-  const numberOfResults = props.totalResults === undefined ? 0 : props.totalResults;
-  const tagType = props.activeFilters.type === undefined || props.activeFilters.type === "" ? null : 
-    <button onClick = {props.onclicktype} type = "button" className="ml-auto results__btn">
+function Results({totalResults,activeFilters,onclick}) {
+  const numberOfResults = totalResults === undefined ? 0 : totalResults;
+  const tagType = activeFilters.type === undefined || activeFilters.type === "" ? null : 
+    <button onClick = {()=>{onclick("type")}} type = "button" className="ml-auto results__btn">
       <img src={times} alt="logo" className="results__icon"/>
-      {props.activeFilters.type}
+      {activeFilters.type}
     </button>
-  const tagYear = props.activeFilters.year === undefined || props.activeFilters.year === "" ? null : 
-  <button onClick = {props.onclickyear} type = "button" className="results__btn">
+  const tagYear = activeFilters.year === undefined || activeFilters.year === "" ? null : 
+  <button onClick = {()=>{onclick("year")}} type = "button" className="results__btn">
     <img src={times} alt="logo" className="results__icon"/>
-    {props.activeFilters.year}
+    {activeFilters.year}
   </button>
-  const results = props.totalResults === null ? "" : 
+  const results = totalResults === null ? "" : 
   <div className ="results">
     <div className = "d-flex">
       <div>

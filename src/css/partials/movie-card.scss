@@ -1,10 +1,21 @@
 .movie-card {
+  text-decoration: none;
   text-align: center;
-  border-radius: 8px;
-  box-shadow: 11px 4px 22px -1px rgba(0,0,0,0.75);
-  padding-top: 24px;
-  margin-bottom: 30px;
-  overflow-x: hidden;
+
+  a {
+    display: block;
+    text-decoration: none;
+    color: black;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    box-shadow: 6px 6px 11px -1px rgba(105,93,105,1);
+    &:hover {
+      text-decoration: none;
+      box-shadow: 6px 6px 11px -9px rgba(105,93,105,1);
+    }
+    padding-top: 24px;
+  }
+
 
   &__wrapper {
     padding: 30px 24px;
@@ -18,11 +29,8 @@
   }
 
   &__img {
+    height: 100%;
     max-height: 300px;
     margin-bottom: 30px;
-
-    @media only screen and (max-width: 986px) {
-      max-height: 130px;
-    } 
   }
 }

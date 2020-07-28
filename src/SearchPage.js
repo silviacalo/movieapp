@@ -24,9 +24,6 @@ function SearchPage({location}) {
   const [pagination, setPagination] = useState([]);
   const [activePage, setActivePage] = useState((location.state && location.state.activePage) || 1);
 
-
-  console.log(key);
-
   //logica della paginazione
   const createPagination = useCallback((total) => {
 
@@ -52,8 +49,6 @@ function SearchPage({location}) {
     myArray = myArray.filter(element => {
       return ( typeof(element) === "string" ||  (element > 0 && element <= totalPages))
     });
-
-    console.log(myArray);
     setPagination(myArray);
   }, [activePage]);
 
@@ -162,7 +157,7 @@ function SearchPage({location}) {
           <Loading />
         ):(
           <>
-            <Results totalResults = {totalResults} activeFilters = {tags} onclick = {removeFilter} />
+            <Results totalResults = {totalResults} activeFilters = {tags} onclick = {removeFilter} keyWord = {key} />
             <div className="row">
                 <div className="col-12 col-lg-2">
                   <Filters totalResults = {totalResults} filter = {filter} handleSubmit = {filtersSubmit} handleChange = {filtersChange} />

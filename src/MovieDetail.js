@@ -3,7 +3,7 @@ import Header from './Header';
 import {useParams} from "@reach/router";
 import Loading from './Loading';
 
-function MovieDetail(props) {
+function MovieDetail({location}) {
   const [link] = useState("/movie-app");
   const [movie, setMovie] = useState("");
   const [loading, setLoading] = useState(true); 
@@ -92,7 +92,7 @@ function MovieDetail(props) {
 
   return (
     <div>
-      <Header link = {link} keyword = {props.location.state.keyWord} tags = {props.location.state.tags} activePage = {props.location.state.activePage} />
+      <Header link = {link} keyword = {location.state.keyWord} tags = {location.state.tags} activePage = {location.state.activePage} />
       <div className = "container">
         <div className = "row">
           <div className = "col-12">

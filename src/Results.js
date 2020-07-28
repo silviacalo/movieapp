@@ -1,7 +1,7 @@
 import React from 'react';
 import times from './times.svg';
 
-function Results({totalResults,activeFilters,onclick}) {
+function Results({totalResults,activeFilters,onclick, keyWord}) {
   const numberOfResults = totalResults === undefined ? 0 : totalResults;
   const tagType = activeFilters.type === undefined || activeFilters.type === "" ? null : 
     <button onClick = {()=>{onclick("type")}} type = "button" className="ml-auto results__btn">
@@ -18,8 +18,9 @@ function Results({totalResults,activeFilters,onclick}) {
     <div className = "d-flex">
       <div>
         We have found
-          <span className ="results__number"> {numberOfResults} </span>
-        results
+        <span className ="results__number"> {numberOfResults} </span>
+        results for 
+        <strong> "{keyWord}"</strong>
       </div>
       <div className="ml-auto">
         {tagType}

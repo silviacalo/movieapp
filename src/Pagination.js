@@ -2,16 +2,16 @@ import React from 'react';
 
 function Pagination({pagination, click, activePage, results}) {
   let array = pagination;
-  let paginationList = array.map((el) => {
+  let paginationList = array.map((el,index) => {
     if (typeof(el) === "string") {
       return(
-        <li className="pagination__dots">
+        <li className="pagination__dots" key = {index}>
           {el}
         </li>
       )
     } else {
       return(
-        <li className = "pagination__item">
+        <li className = "pagination__item" key = {index}>
           <button onClick = {()=>click(el)} className= {activePage === el ? "pagination__btn active" : "pagination__btn"}>
             {el}
           </button>

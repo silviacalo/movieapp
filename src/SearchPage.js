@@ -6,8 +6,10 @@ import Filters from './Filters';
 import Results from './Results';
 import Header from './Header';
 import Loading from './Loading';
+import Login from './Login';
 
 function SearchPage({location}) {
+  const [authentication, setAuthentication] = useState((location.state && location.state.login) || false);
   const [movieList, setMovieList] = useState([]);
   const [keyInput, setKeyInput] = useState("");
   const [key, setKey] = useState((location.state && location.state.keyword) || "");
@@ -23,6 +25,11 @@ function SearchPage({location}) {
   });
   const [pagination, setPagination] = useState([]);
   const [activePage, setActivePage] = useState((location.state && location.state.activePage) || 1);
+
+  //per il setting della login 
+  const setLogin = () => {
+    setAuthentication(true);
+  }
 
   //logica della paginazione
   const createPagination = useCallback((total) => {
@@ -145,29 +152,33 @@ function SearchPage({location}) {
   return (
     <div>
       <Header />
-      <div className="container">
-        <div className="row">
-          <div className="col-12">
-            <div className="d-flex justify-content-around">
-              <SearchForm text = {keyInput} change = {handleChange} submit = {handleSubmit} />
+      {!authentication ? (
+        <Login submit = {setLogin} /> 
+        ):( 
+        <div className="container">
+          <div className="row">
+            <div className="col-12">
+              <div className="d-flex justify-content-around">
+                <SearchForm text = {keyInput} change = {handleChange} submit = {handleSubmit} />
+              </div>
             </div>
           </div>
+          {loading ? (
+            <Loading />
+          ):(
+            <>
+              <Results totalResults = {totalResults} activeFilters = {tags} onclick = {removeFilter} keyWord = {key} />
+              <div className="row">
+                  <div className="col-12 col-lg-2">
+                    <Filters totalResults = {totalResults} filter = {filter} handleSubmit = {filtersSubmit} handleChange = {filtersChange} />
+                  </div>
+                  <MovieCard movies = {movieList} keyWord = {key} tags = {tags} activePage = {activePage} login = {authentication} />
+              </div>
+              <Pagination pagination = {pagination} activePage = {activePage} results = {totalResults} click = {changePage} />
+            </>
+          )}
         </div>
-        {loading ? (
-          <Loading />
-        ):(
-          <>
-            <Results totalResults = {totalResults} activeFilters = {tags} onclick = {removeFilter} keyWord = {key} />
-            <div className="row">
-                <div className="col-12 col-lg-2">
-                  <Filters totalResults = {totalResults} filter = {filter} handleSubmit = {filtersSubmit} handleChange = {filtersChange} />
-                </div>
-                <MovieCard movies = {movieList} keyWord = {key} tags = {tags} activePage = {activePage} />
-            </div>
-            <Pagination pagination = {pagination} activePage = {activePage} results = {totalResults} click = {changePage} />
-          </>
-        )}
-      </div>
+      )}
     </div>
   );
 }

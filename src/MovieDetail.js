@@ -92,7 +92,7 @@ function MovieDetail({location}) {
 
   return (
     <div>
-      <Header link = {link} keyword = {location.state.keyWord} tags = {location.state.tags} activePage = {location.state.activePage} />
+      <Header link = {link} keyword = {location.state.keyWord} tags = {location.state.tags} activePage = {location.state.activePage} login = {location.state.login}/>
       <div className = "container">
         <div className = "row">
           <div className = "col-12">

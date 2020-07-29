@@ -6,11 +6,10 @@ import MovieDetail from './MovieDetail';
 import {Router} from "@reach/router";
 
 function App () {
-  const NotFound = () => <p>Sorry, nothing here</p>;
+
   return (
     <Router>
-      <NotFound default />
-      <SearchPage path = "/movie-app" default />
+      <SearchPage path = "/movie-app" default/>
       <MovieDetail path = "/detail-page/:movieId" />
     </Router>
   )

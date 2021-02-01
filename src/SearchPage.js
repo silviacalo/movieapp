@@ -63,7 +63,8 @@ function SearchPage({location}) {
   useEffect(() => {
     if(key) {
       setLoading(true);
-      let url = 'http://www.omdbapi.com/?apikey=4a3b711b&s=' + key + '&page=' + activePage + '&type=' + tags.type + '&y=' + tags.year;
+      // let url = 'http://www.omdbapi.com/?apikey=4a3b711b&s=' + key + '&page=' + activePage + '&type=' + tags.type + '&y=' + tags.year;
+      let url = "https://v7enyxsxw5.execute-api.us-east-1.amazonaws.com/dev/callMovieApi?key=1" ;
       fetch(url)
       .then(response => response.json())
       .then(data => {
@@ -152,7 +153,7 @@ function SearchPage({location}) {
   return (
     <div>
       <Header />
-      {!authentication ? (
+      {authentication ? (
         <Login submit = {setLogin} /> 
         ):( 
         <div className="container">
